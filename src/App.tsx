@@ -1,6 +1,5 @@
-import { useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { Button } from "../vendor/telegram-ui-kit/src/components/Button/Button";
-import { Icon } from "../vendor/telegram-ui-kit/src/components/Icon/Icon";
 import { Image } from "../vendor/telegram-ui-kit/src/components/Image/Image";
 import { Input } from "../vendor/telegram-ui-kit/src/components/Input/Input";
 import { Sheet } from "../vendor/telegram-ui-kit/src/components/Sheet/Sheet";
@@ -13,15 +12,16 @@ type Amount = "5" | "10" | "25" | "custom";
 
 const asset = (name: string) => `${import.meta.env.BASE_URL}assets/${name}`;
 
+const PROFILE_BG = asset("profile-bg.jpg");
+const AVATAR = asset("avatar.jpg");
+
 const RECIPIENT_ADDRESS =
   "UQDlmQfncLTHp_ceI6gz8eA19wQ2cia9ysskYO-ZA1IANpDx";
 const USDT_MASTER =
   "EQCxE6mUtQJKFnGfaROTKOt1lZbDiiX1kCixRv7Nw2Id_sDs";
 
-const GRAM_ICON =
-  "https://asset.ston.fi/img/EQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAM9c/c8d21a3d93f9b574381e0a8d8f16d48b325dd8f54ce172f599c1e9d6c62f03f7";
-const USDT_ICON =
-  "https://asset.ston.fi/img/EQCxE6mUtQJKFnGfaROTKOt1lZbDiiX1kCixRv7Nw2Id_sDs/1a87edfee9a28b05578853952e5effb8cc30af1e0fb90043aa2ce19dce490849";
+const GRAM_ICON = asset("gram.svg");
+const USDT_ICON = asset("usdt.svg");
 
 const currencies: Array<{
   id: Currency;
@@ -83,6 +83,14 @@ function TelegramPlaneIcon() {
         d="M20.5 4.2 17.1 20c-.25 1.12-.9 1.4-1.82.87l-4.95-3.65-2.39 2.3c-.26.26-.48.48-.98.48l.36-5.04 9.17-8.28c.4-.36-.09-.56-.62-.2L4.54 13.62.1 12.23c-.97-.31-.99-.98.2-1.44L17.62 4c.8-.3 1.5.18 1.2.2l1.68.02Z"
         fill="currentColor"
       />
+    </svg>
+  );
+}
+
+function CheckMark() {
+  return (
+    <svg className={styles.checkMark} viewBox="0 0 20 20" aria-hidden="true">
+      <path d="M4.2 10.5 8.4 14.6 15.9 5.9" />
     </svg>
   );
 }
@@ -163,9 +171,7 @@ function TipSheet() {
                 <span className={styles.currencySubtitle}>{item.subtitle}</span>
               </span>
               <span className={styles.checkArea} aria-hidden="true">
-                {currency === item.id && (
-                  <Icon name="check" width="18px" height="18px" color="primary" />
-                )}
+                {currency === item.id && <CheckMark />}
               </span>
               {index === 0 && <span className={styles.rowDivider} />}
             </button>
@@ -250,20 +256,25 @@ export function App() {
 
   return (
     <main className={styles.page}>
-      <div className={styles.profileBackdrop} aria-hidden="true" />
+      <div
+        className={styles.profileBackdrop}
+        aria-hidden="true"
+        style={{ ["--profile-bg-url" as string]: `url(${PROFILE_BG})` } as React.CSSProperties}
+      />
       <div className={styles.pattern} aria-hidden="true" />
       <div className={styles.backdropVignette} aria-hidden="true" />
 
       <section className={styles.profile} aria-label="JAMMM profile">
         <div className={styles.avatarWrap}>
           <Image
-            src={asset("avatar.svg")}
+            src={AVATAR}
             alt="JAMMM avatar"
             width="clamp(5.75rem, 24vw, 7rem)"
             height="clamp(5.75rem, 24vw, 7rem)"
             borderRadius="50%"
             objectFit="cover"
             className={styles.avatar}
+            onError={(event) => { event.currentTarget.src = asset("avatar.svg"); }}
           />
           <span className={styles.onlineDot} aria-label="online" />
         </div>

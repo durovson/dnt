@@ -38,3 +38,11 @@ npm install
 npm run build
 npm run preview
 ```
+
+
+## Custom profile photos
+Put your images in `public/assets/` with these exact names:
+- `profile-bg.jpg` — background photo
+- `avatar.jpg` — avatar
+
+The app automatically falls back to the included SVG placeholders if the photos are missing.

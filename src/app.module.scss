@@ -1,3 +1,11 @@
+@use "../vendor/telegram-ui-kit/src/styles/variables" as *;
+
+:global(:root) {
+  --jammm-lime: #adc322;
+  --jammm-orange: #e97731;
+  --jammm-mint: #d6e5d2;
+}
+
 .page {
   position: relative;
   min-height: 100svh;
@@ -17,10 +25,14 @@
 
 .profileBackdrop {
   z-index: -4;
-  background:
+  background-image:
     linear-gradient(180deg, rgba(0, 0, 0, .14), rgba(0, 0, 0, .72)),
-    url('../assets/profile-bg.svg') center / cover no-repeat;
-  filter: saturate(0) contrast(.95) brightness(.82);
+    var(--profile-bg-url),
+    url('../assets/profile-bg.svg');
+  background-position: center, center, center;
+  background-size: cover, cover, cover;
+  background-repeat: no-repeat, no-repeat, no-repeat;
+  filter: saturate(.55) contrast(.96) brightness(.72);
   transform: scale(1.02);
 }
 
@@ -115,7 +127,7 @@
 }
 
 .profileAction:hover {
-  border-color: rgba(255,255,255,.23);
+  border-color: color-mix(in srgb, var(--jammm-lime) 45%, rgba(255,255,255,.2));
   background: rgba(28,28,32,.88);
 }
 
@@ -127,8 +139,8 @@
   border-radius: 50%;
   display: grid;
   place-items: center;
-  background: rgba(255,255,255,.1);
-  color: #fff;
+  background: rgba(214,229,210,.10);
+  color: var(--jammm-mint);
   box-shadow: inset 0 1px 0 rgba(255,255,255,.05);
 }
 
@@ -137,10 +149,10 @@
   min-height: 3.35rem !important;
   margin-top: .7rem;
   flex: 0 0 auto !important;
-  background: linear-gradient(180deg, #ff4b5f, #e62d40) !important;
-  color: #fff !important;
-  border: 1px solid rgba(255,255,255,.12) !important;
-  box-shadow: 0 .8rem 2rem rgba(237, 52, 73, .18);
+  background: linear-gradient(135deg, var(--jammm-lime), var(--jammm-orange)) !important;
+  color: #10120a !important;
+  border: 1px solid rgba(214,229,210,.22) !important;
+  box-shadow: 0 .8rem 2rem rgba(173, 195, 34, .20);
 }
 
 .tipTrigger:focus,
@@ -211,7 +223,7 @@
 .currencyRow:active { background: rgba(255,255,255,.07); }
 .currencyRow:focus,
 .currencyRow:focus-visible { outline: none; }
-.selectedRow { background: linear-gradient(90deg, rgba(255,255,255,.065), rgba(255,255,255,.018)); }
+.selectedRow { background: linear-gradient(90deg, rgba(173,195,34,.14), rgba(214,229,210,.035)); }
 .currencyIcon { width: 2.55rem; height: 2.55rem; }
 .currencyIcon img { display: block; width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
 .currencyCopy { min-width: 0; display: grid; gap: .12rem; }
@@ -246,8 +258,8 @@
 .amountPill:focus,
 .amountPill:focus-visible { outline: none; }
 .amountActive {
-  background: rgba(255,255,255,.13);
-  border-color: rgba(255,255,255,.2);
+  background: color-mix(in srgb, var(--jammm-lime) 28%, rgba(255,255,255,.08));
+  border-color: color-mix(in srgb, var(--jammm-lime) 55%, rgba(255,255,255,.2));
   box-shadow: inset 0 1px 0 rgba(255,255,255,.04);
 }
 
@@ -264,8 +276,8 @@
 }
 
 .customInput:focus-within {
-  border-color: rgba(255,255,255,.24);
-  box-shadow: 0 0 0 .2rem rgba(255,255,255,.05);
+  border-color: color-mix(in srgb, var(--jammm-orange) 55%, rgba(255,255,255,.18));
+  box-shadow: 0 0 0 .2rem rgba(233,119,49,.10);
 }
 
 .customInputPrefix {
@@ -290,8 +302,10 @@
 .ctaArea { margin-top: 1.15rem; }
 .sendButton {
   min-height: 3.4rem !important;
-  background: linear-gradient(180deg, #ff4b5f, #e52d40) !important;
-  box-shadow: 0 .6rem 1.5rem rgba(250,63,77,.21);
+  background: linear-gradient(135deg, var(--jammm-lime), var(--jammm-orange)) !important;
+  color: #10120a !important;
+  border: 1px solid rgba(214,229,210,.24) !important;
+  box-shadow: 0 .6rem 1.5rem rgba(173,195,34,.24);
 }
 .sendButton:focus,
 .sendButton:focus-visible,
@@ -307,4 +321,25 @@
   .profile { max-width: 42rem; }
   .profileActions { max-width: 34rem; }
   .sheetContent { max-width: none; padding-inline: 1.5rem; }
+}
+
+.checkMark {
+  width: 1.15rem;
+  height: 1.15rem;
+  display: block;
+}
+
+.checkMark path {
+  fill: none;
+  stroke: var(--jammm-lime);
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.currencyRow,
+.amountPill {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
 }
