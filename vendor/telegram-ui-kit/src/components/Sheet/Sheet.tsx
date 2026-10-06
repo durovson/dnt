@@ -1,6 +1,6 @@
 import { createPortal } from "react-dom";
 import cn from "classnames";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, type PointerEvent as ReactPointerEvent } from "react";
 import { RemoveScroll } from "react-remove-scroll";
 
 import { Icon } from "../Icon/Icon";
@@ -16,7 +16,8 @@ interface SheetProps {
   transitionDuration?: number;
 }
 
-const DEFAULT_TRANSITION_DURATION = 300;
+const DEFAULT_TRANSITION_DURATION = 280;
+const DRAG_CLOSE_THRESHOLD = 96;
 
 export function Sheet({
   sheets,
@@ -28,7 +29,12 @@ export function Sheet({
   const [hostActive, setHostActive] = useState(false);
   const [panelOpen, setPanelOpen] = useState(false);
   const [displayedName, setDisplayedName] = useState<string | null>(null);
+  const [dragOffset, setDragOffset] = useState(0);
+  const [dragging, setDragging] = useState(false);
 
+  const sheetRef = useRef<HTMLDivElement | null>(null);
+  const dragStartY = useRef<number | null>(null);
+  const dragPointerId = useRef<number | null>(null);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const rafRef = useRef<number | null>(null);
   const prevNameRef = useRef<string | null>(null);
@@ -58,10 +64,10 @@ export function Sheet({
     const prevOpened = prevOpenedRef.current;
     const nextName = activeSheet;
 
-    // Opening
     if (!prevOpened && opened) {
       clearTimer();
       clearRaf();
+      setDragOffset(0);
       setDisplayedName(nextName);
       setHostActive(true);
       setPanelOpen(false);
@@ -73,10 +79,10 @@ export function Sheet({
       });
     }
 
-    // Closing
     if (prevOpened && !opened) {
       clearTimer();
       clearRaf();
+      setDragOffset(0);
       setPanelOpen(false);
       timerRef.current = setTimeout(() => {
         setHostActive(false);
@@ -85,7 +91,6 @@ export function Sheet({
       }, transitionDuration);
     }
 
-    // Switch while open
     if (prevOpened && opened && prevName && nextName && prevName !== nextName) {
       clearTimer();
       clearRaf();
@@ -100,7 +105,6 @@ export function Sheet({
       }, transitionDuration);
     }
 
-    // Update displayed name while closed
     if (!opened && prevName !== nextName) {
       setDisplayedName(nextName);
     }
@@ -114,6 +118,72 @@ export function Sheet({
     };
   }, [activeSheet, opened, transitionDuration]);
 
+  const canStartDrag = (target: EventTarget | null) => {
+    if (!(target instanceof Element)) return true;
+    return !target.closest("button, a, input, textarea, select, label");
+  };
+
+  const handlePointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
+    if (event.pointerType === "mouse" && event.button !== 0) return;
+    if (!opened || !canStartDrag(event.target)) return;
+
+    const sheet = sheetRef.current;
+    if (!sheet) return;
+
+    // Downward pull-to-close starts only when the sheet itself is already at the top.
+    if (sheet.scrollTop > 0) return;
+
+    dragStartY.current = event.clientY;
+    dragPointerId.current = event.pointerId;
+    setDragging(true);
+    event.currentTarget.setPointerCapture(event.pointerId);
+  };
+
+  const handlePointerMove = (event: ReactPointerEvent<HTMLDivElement>) => {
+    if (!dragging || dragStartY.current === null) return;
+
+    const delta = event.clientY - dragStartY.current;
+    if (delta <= 0) {
+      setDragOffset(0);
+      return;
+    }
+
+    // Rubber-band the sheet slightly so accidental drags do not feel stuck.
+    setDragOffset(Math.min(delta, window.innerHeight * 0.86));
+  };
+
+  const finishDrag = (event?: ReactPointerEvent<HTMLDivElement>) => {
+    if (!dragging) return;
+
+    const shouldClose = dragOffset >= DRAG_CLOSE_THRESHOLD;
+    dragStartY.current = null;
+    dragPointerId.current = null;
+    setDragging(false);
+
+    if (event && event.currentTarget.hasPointerCapture(event.pointerId)) {
+      event.currentTarget.releasePointerCapture(event.pointerId);
+    }
+
+    if (shouldClose) {
+      setDragOffset(0);
+      onClose();
+      return;
+    }
+
+    setDragOffset(0);
+  };
+
+  const handlePointerCancel = (event: ReactPointerEvent<HTMLDivElement>) => {
+    if (!dragging) return;
+    dragStartY.current = null;
+    dragPointerId.current = null;
+    setDragging(false);
+    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+      event.currentTarget.releasePointerCapture(event.pointerId);
+    }
+    setDragOffset(0);
+  };
+
   if (!hostActive) return null;
 
   return createPortal(
@@ -121,23 +191,34 @@ export function Sheet({
       <div
         className={cn(styles.root, (panelOpen || opened) && styles.rootActive)}
         onClick={onClose}
-        aria-hidden
+        aria-hidden="true"
       />
 
       <div
-        className={cn(styles.sheet, panelOpen && styles.sheetActive)}
+        ref={sheetRef}
+        className={cn(styles.sheet, panelOpen && styles.sheetActive, dragging && styles.sheetDragging)}
         role="dialog"
         aria-modal="true"
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerUp={finishDrag}
+        onPointerCancel={handlePointerCancel}
+        style={dragging || dragOffset ? { transform: `translateY(${dragOffset}px)` } : undefined}
       >
-        <div className={styles.cross} onClick={onClose} aria-label="Close">
+        <button
+          type="button"
+          className={styles.cross}
+          onClick={onClose}
+          aria-label="Close"
+        >
           <Icon name="cross" width="16px" height="16px" color="primary" />
-        </div>
+        </button>
 
         <div className={styles.content}>
           {ActiveComponent ? <ActiveComponent /> : null}
         </div>
       </div>
     </RemoveScroll>,
-    document.body
+    document.body,
   );
 }

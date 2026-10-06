@@ -1,49 +1,53 @@
 .root {
   user-select: none;
   position: fixed;
-  top: 0;
-  right: 0;
-  left: 0;
-  bottom: 0;
+  inset: 0;
   width: 100%;
   height: 100%;
-  max-height: 100vh;
   pointer-events: none;
   opacity: 0;
   z-index: 999;
-  transition: opacity 0.2s ease;
-  background-color: #000000d2;
+  transition: opacity 0.24s ease;
+  background: rgba(0, 0, 0, .68);
   overflow: hidden;
+  backdrop-filter: blur(.35rem);
+  -webkit-backdrop-filter: blur(.35rem);
+}
 
-  &.rootActive {
-    pointer-events: initial;
-    opacity: 1;
-  }
+.rootActive {
+  pointer-events: initial;
+  opacity: 1;
 }
 
 .sheet {
   font-family: var(--font-display, var(--font-base));
   color: var(--color-foreground-primary);
   position: fixed;
-  top: var(--sheet-top);
-  bottom: 0;
   left: 0;
   right: 0;
+  bottom: 0;
   width: 100%;
-  max-height: 100%;
+  max-height: 88dvh;
   z-index: 999;
   background-color: var(--color-background-base);
-  border-top-left-radius: 16px;
-  border-top-right-radius: 16px;
+  border-top-left-radius: 24px;
+  border-top-right-radius: 24px;
   transform: translateY(100%);
-  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
   will-change: transform;
   overflow-y: auto;
+  overscroll-behavior: contain;
+  touch-action: pan-y;
+  -webkit-overflow-scrolling: touch;
+  box-shadow: 0 -1rem 3rem rgba(0,0,0,.28);
+}
 
-  &.sheetActive {
-    // transform: translateY(-100%);
-    transform: translateY(0%);
-  }
+.sheetActive {
+  transform: translateY(0%);
+}
+
+.sheetDragging {
+  transition: none;
 }
 
 .cross {
@@ -54,24 +58,41 @@
   width: 48px;
   min-width: 48px;
   height: 48px;
+  padding: 0;
+  border: 0;
   border-radius: 50%;
   background: var(--color-background-secondary);
+  color: var(--color-foreground-primary);
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
 
-  svg {
-    path {
-      opacity: 0.4;
-    }
-  }
+.cross:hover { background: color-mix(in srgb, var(--color-background-secondary) 78%, white); }
+.cross:active { transform: scale(.96); }
+.cross:focus,
+.cross:focus-visible { outline: none; box-shadow: none; }
+
+.cross svg {
+  pointer-events: none;
 }
 
 .content {
   flex: 1 1 auto;
-  overflow-y: auto;
-  max-height: 100%;
+  min-height: 0;
   padding: 0;
 }
 
+@media (min-width: 48rem) {
+  .sheet {
+    left: 50%;
+    right: auto;
+    bottom: 1rem;
+    width: min(34rem, calc(100vw - 2rem));
+    max-height: min(45rem, calc(100dvh - 2rem));
+    border-radius: 24px;
+  }
+}

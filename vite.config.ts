@@ -6,7 +6,6 @@ import { fileURLToPath } from "node:url";
 const rootDir = path.dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
-  // Relative asset paths make the same build work on GitHub Pages (/dnt/) and on the custom domain (is.a-dev).
   base: "./",
   plugins: [react()],
   css: { modules: { localsConvention: "camelCase" } },
