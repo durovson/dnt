@@ -11,9 +11,11 @@ import styles from "./app.module.scss";
 type Currency = "GRAM" | "USDT";
 type Amount = "5" | "10" | "25" | "custom";
 
+const asset = (name: string) => `${import.meta.env.BASE_URL}assets/${name}`;
+
 const currencies: Array<{ id: Currency; title: string; subtitle: string; icon: string }> = [
-  { id: "GRAM", title: "Gram", subtitle: "GRAM", icon: "/assets/gram.svg" },
-  { id: "USDT", title: "USDT on TON", subtitle: "USDT", icon: "/assets/usdt.svg" },
+  { id: "GRAM", title: "Gram", subtitle: "GRAM", icon: asset("gram.svg") },
+  { id: "USDT", title: "USDT on TON", subtitle: "USDT", icon: asset("usdt.svg") },
 ];
 
 const amounts: Amount[] = ["5", "10", "25", "custom"];
@@ -163,7 +165,7 @@ export function App() {
       <section className={styles.profile} aria-label="JAMMM profile">
         <div className={styles.avatarWrap}>
           <Image
-            src="/assets/avatar.svg"
+            src={asset("avatar.svg")}
             alt="JAMMM avatar"
             width="clamp(7rem, 35vw, 9.25rem)"
             height="clamp(7rem, 35vw, 9.25rem)"

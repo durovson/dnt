@@ -19,7 +19,7 @@
   z-index: -4;
   background:
     linear-gradient(180deg, rgba(0, 0, 0, .18), rgba(0, 0, 0, .66)),
-    url('/assets/profile-bg.svg') center / cover no-repeat;
+    url('../assets/profile-bg.svg') center / cover no-repeat;
   filter: saturate(0) contrast(.9);
   transform: scale(1.02);
 }
@@ -27,7 +27,7 @@
 .pattern {
   z-index: -3;
   opacity: .52;
-  background: url('/assets/tip-pattern.svg') center / 18rem 18rem repeat;
+  background: url('../assets/tip-pattern.svg') center / 18rem 18rem repeat;
 }
 
 .backdropVignette {
