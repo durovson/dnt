@@ -10,7 +10,6 @@ export default defineConfig({
   css: { modules: { localsConvention: "camelCase" } },
   resolve: {
     alias: {
-      "@components": path.resolve(rootDir, "vendor/telegram-ui-kit/src/components"),
       "@ui-styles": path.resolve(rootDir, "vendor/telegram-ui-kit/src/styles"),
     },
   },

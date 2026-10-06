@@ -3,7 +3,7 @@ import cn from "classnames";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { RemoveScroll } from "react-remove-scroll";
 
-import { Icon } from "@components";
+import { Icon } from "../Icon/Icon";
 import styles from "./Sheet.module.scss";
 
 export type SheetComponentMap = Record<string, React.ComponentType>;
