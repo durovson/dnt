@@ -1,0 +1,146 @@
+@layer components {
+  :where(.text) {
+    font-family: var(--font-display, var(--font-base));
+    color: var(--color-foreground-primary);
+    display: block;
+    margin: 0;
+  }
+
+  :where(.uppercase) {
+    text-transform: uppercase;
+  }
+
+  :where(.truncate) {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  :where(.color-primary) {
+    color: var(--color-foreground-primary);
+  }
+
+  :where(.color-secondary) {
+    color: var(--color-foreground-secondary);
+  }
+
+  :where(.color-tertiary) {
+    color: var(--color-foreground-tertiary);
+  }
+
+  :where(.color-accent) {
+    color: var(--color-accent-primary);
+  }
+
+  :where(.color-danger) {
+    color: var(--color-state-destructive);
+  }
+
+  :where(.color-white) {
+    color: var(--color-static-white);
+  }
+
+  :where(.type-hero) {
+    font-size: 88px;
+    line-height: 96px;
+  }
+
+  :where(.type-largeTitle) {
+    font-size: 34px;
+    line-height: 41px;
+  }
+
+  :where(.type-title1) {
+    font-size: 28px;
+    line-height: 34px;
+  }
+
+  :where(.type-title2) {
+    font-size: 24px;
+    line-height: 30px;
+  }
+
+  :where(.type-title3) {
+    font-size: 22px;
+    line-height: 28px;
+  }
+
+  :where(.type-title4) {
+    font-size: 20px;
+    line-height: 24px;
+  }
+
+  :where(.type-body) {
+    font-size: 17px;
+    line-height: 22px;
+  }
+
+  :where(.type-callout) {
+    font-size: 16px;
+    line-height: 22px;
+  }
+
+  :where(.type-subheadline1) {
+    font-size: 15px;
+    line-height: 20px;
+  }
+
+  :where(.type-subheadline2) {
+    font-size: 14px;
+    line-height: 18px;
+  }
+
+  :where(.type-footnote) {
+    font-size: 13px;
+    line-height: 18px;
+  }
+
+  :where(.type-caption1) {
+    font-size: 12px;
+    line-height: 16px;
+  }
+
+  :where(.type-caption2) {
+    font-size: 11px;
+    line-height: 13px;
+  }
+
+  :where(.weight-light) {
+    font-weight: 300;
+  }
+
+  :where(.weight-regular) {
+    font-weight: 400;
+  }
+
+  :where(.weight-medium) {
+    font-weight: 500;
+  }
+
+  :where(.weight-semibold) {
+    font-weight: 600;
+  }
+
+  :where(.weight-bold) {
+    font-weight: 700;
+  }
+
+  :where(.align-left) {
+    text-align: left;
+  }
+
+  :where(.align-center) {
+    text-align: center;
+  }
+
+  :where(.align-right) {
+    text-align: right;
+  }
+
+  :where(.align-stretch) {
+    text-align: stretch;
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "lib": ["DOM", "DOM.Iterable", "ES2020"],
+    "allowJs": false,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "baseUrl": ".",
+    "paths": {
+      "@components": ["vendor/telegram-ui-kit/src/components/index.ts"]
+    },
+    "types": ["vite/client"]
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx", "vendor/telegram-ui-kit/src/**/*.ts", "vendor/telegram-ui-kit/src/**/*.tsx"]
+}
