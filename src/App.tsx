@@ -64,7 +64,7 @@ function buildPaymentLinks(currency: Currency, amount: string) {
   const units = toSmallestUnit(amount, decimals);
   if (units === null || units <= 0n) return null;
 
-  const text = encodeURIComponent("Tip me • JAMMM");
+  const text = encodeURIComponent("Support • JAMMM");
   const query =
     currency === "GRAM"
       ? `amount=${units.toString()}&text=${text}`
@@ -132,7 +132,7 @@ function TipSheet() {
 
       <div className={styles.sheetHeader}>
         <Text as="h2" type="title2" weight="bold">
-          Tip me
+          Support
         </Text>
       </div>
 
@@ -256,10 +256,14 @@ export function App() {
 
   return (
     <main className={styles.page}>
-      <div
+      <img
         className={styles.profileBackdrop}
+        src={PROFILE_BG}
+        alt=""
         aria-hidden="true"
-        style={{ ["--profile-bg-url" as string]: `url(${PROFILE_BG})` } as React.CSSProperties}
+        onError={(event) => {
+          event.currentTarget.style.display = "none";
+        }}
       />
       <div className={styles.pattern} aria-hidden="true" />
       <div className={styles.backdropVignette} aria-hidden="true" />
@@ -316,7 +320,7 @@ export function App() {
           onClick={() => setSheetOpen(true)}
           className={styles.tipTrigger}
         >
-          Tip me
+          Support
         </Button>
       </section>
 

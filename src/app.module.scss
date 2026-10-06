@@ -25,13 +25,10 @@
 
 .profileBackdrop {
   z-index: -4;
-  background-image:
-    linear-gradient(180deg, rgba(0, 0, 0, .14), rgba(0, 0, 0, .72)),
-    var(--profile-bg-url),
-    url('../assets/profile-bg.svg');
-  background-position: center, center, center;
-  background-size: cover, cover, cover;
-  background-repeat: no-repeat, no-repeat, no-repeat;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
   filter: saturate(.55) contrast(.96) brightness(.72);
   transform: scale(1.02);
 }
@@ -150,7 +147,7 @@
   margin-top: .7rem;
   flex: 0 0 auto !important;
   background: linear-gradient(135deg, var(--jammm-lime), var(--jammm-orange)) !important;
-  color: #10120a !important;
+  color: var(--jammm-mint) !important;
   border: 1px solid rgba(214,229,210,.22) !important;
   box-shadow: 0 .8rem 2rem rgba(173, 195, 34, .20);
 }
@@ -303,7 +300,7 @@
 .sendButton {
   min-height: 3.4rem !important;
   background: linear-gradient(135deg, var(--jammm-lime), var(--jammm-orange)) !important;
-  color: #10120a !important;
+  color: var(--jammm-mint) !important;
   border: 1px solid rgba(214,229,210,.24) !important;
   box-shadow: 0 .6rem 1.5rem rgba(173,195,34,.24);
 }
@@ -343,3 +340,10 @@
   -webkit-appearance: none;
   -moz-appearance: none;
 }
+
+
+:global(button) { -webkit-tap-highlight-color: transparent; }
+
+.currencyRow, .amountPill { color: var(--jammm-mint); }
+.currencyTitle { color: var(--jammm-mint); }
+.profileAction { color: var(--jammm-mint); text-decoration: none; }
