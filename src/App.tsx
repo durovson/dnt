@@ -207,7 +207,6 @@ function TipSheet() {
 
         {amount === "custom" && (
           <label className={styles.customInput}>
-            <span className={styles.customInputPrefix}>{tokenLabel}</span>
             <Input
               type="text"
               inputMode="decimal"
@@ -262,10 +261,11 @@ export function App() {
         alt=""
         aria-hidden="true"
         onError={(event) => {
-          event.currentTarget.style.display = "none";
+          if (!event.currentTarget.currentSrc.endsWith("/profile-bg.svg")) {
+            event.currentTarget.src = asset("profile-bg.svg");
+          }
         }}
       />
-      <div className={styles.pattern} aria-hidden="true" />
       <div className={styles.backdropVignette} aria-hidden="true" />
 
       <section className={styles.profile} aria-label="JAMMM profile">
