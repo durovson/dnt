@@ -287,7 +287,7 @@ export function App() {
           JAMMM
         </Text>
         <Text type="subheadline2" align="center" color="secondary" className={styles.handle}>
-          @jammm
+          @not_jammm
         </Text>
 
         <div className={styles.profileActions}>

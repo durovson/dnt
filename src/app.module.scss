@@ -28,16 +28,15 @@
   height: 100%;
   object-fit: cover;
   object-position: center;
-  filter: saturate(.52) contrast(.96) brightness(.68);
+  filter: saturate(.42) contrast(1.02) brightness(.58) grayscale(.08);
   transform: scale(1.02);
 }
 
 .backdropVignette {
   z-index: -2;
   background:
-    linear-gradient(135deg, rgba(8, 10, 11, .48) 0%, rgba(17, 19, 20, .42) 42%, rgba(24, 20, 17, .58) 100%),
-    linear-gradient(135deg, rgba(173, 195, 34, .07) 0%, rgba(173, 195, 34, .02) 40%, rgba(233, 119, 49, .10) 100%),
-    radial-gradient(circle at 50% 18%, transparent 0 16%, rgba(0,0,0,.12) 50%, rgba(0,0,0,.58) 100%);
+    linear-gradient(135deg, rgba(9, 9, 9, .62) 0%, rgba(15, 15, 15, .55) 48%, rgba(22, 20, 18, .68) 100%),
+    radial-gradient(circle at 50% 18%, transparent 0 16%, rgba(0,0,0,.18) 50%, rgba(0,0,0,.68) 100%);
 }
 
 .profile {
@@ -143,6 +142,9 @@
   color: var(--jammm-mint) !important;
   border: 1px solid rgba(214,229,210,.22) !important;
   box-shadow: 0 .8rem 2rem rgba(173, 195, 34, .20);
+  font-family: var(--font-display, var(--font-base)) !important;
+  font-size: 1rem !important;
+  font-weight: 650 !important;
 }
 
 .tipTrigger:focus,
@@ -292,6 +294,9 @@
   color: var(--jammm-mint) !important;
   border: 1px solid rgba(214,229,210,.24) !important;
   box-shadow: 0 .6rem 1.5rem rgba(173,195,34,.24);
+  font-family: var(--font-display, var(--font-base)) !important;
+  font-size: 1rem !important;
+  font-weight: 650 !important;
 }
 .sendButton:focus,
 .sendButton:focus-visible,
