@@ -31,15 +31,15 @@
   height: 100%;
   object-fit: cover;
   object-position: center;
-  filter: saturate(.56) contrast(1.05) brightness(.50) grayscale(.04);
+  filter: saturate(.82) contrast(1.08) brightness(.42) grayscale(.02);
   transform: scale(1.02);
 }
 
 .backdropVignette {
   z-index: -2;
   background:
-    linear-gradient(135deg, rgba(7, 7, 7, .70) 0%, rgba(12, 12, 12, .63) 48%, rgba(17, 15, 14, .74) 100%),
-    radial-gradient(circle at 50% 18%, transparent 0 16%, rgba(0,0,0,.24) 50%, rgba(0,0,0,.74) 100%);
+    linear-gradient(135deg, rgba(7, 7, 7, .58) 0%, rgba(12, 12, 12, .52) 48%, rgba(17, 15, 14, .64) 100%),
+    radial-gradient(circle at 50% 18%, transparent 0 16%, rgba(0,0,0,.18) 50%, rgba(0,0,0,.64) 100%);
 }
 
 .profile {
