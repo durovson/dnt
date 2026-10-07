@@ -106,7 +106,14 @@ function AboutIcon() {
 }
 
 function TipSheet() {
-  const [currency, setCurrency] = useState<Currency>("GRAM");
+  const [currency, setCurrency] = useState<Currency>(() => {
+    try {
+      const saved = window.localStorage.getItem("jammm-support-currency");
+      return saved === "USDT" ? "USDT" : "GRAM";
+    } catch {
+      return "GRAM";
+    }
+  });
   const [amount, setAmount] = useState<Amount>("5");
   const [customAmount, setCustomAmount] = useState("");
 
@@ -154,7 +161,12 @@ function TipSheet() {
               type="button"
               key={item.id}
               className={`${styles.currencyRow} ${currency === item.id ? styles.selectedRow : ""}`}
-              onClick={() => setCurrency(item.id)}
+              onClick={() => {
+                setCurrency(item.id);
+                try {
+                  window.localStorage.setItem("jammm-support-currency", item.id);
+                } catch {}
+              }}
               aria-pressed={currency === item.id}
             >
               <span className={styles.currencyIcon}>

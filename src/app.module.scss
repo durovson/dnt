@@ -118,7 +118,7 @@
 }
 
 .profileAction:hover {
-  border-color: color-mix(in srgb, var(--jammm-lime) 45%, rgba(255,255,255,.2));
+  border-color: rgba(173,195,34,.45);
   background: rgba(28,28,32,.88);
 }
 
@@ -256,8 +256,8 @@
 .amountPill:focus,
 .amountPill:focus-visible { outline: none; }
 .amountActive {
-  background: color-mix(in srgb, var(--jammm-lime) 28%, rgba(255,255,255,.08));
-  border-color: color-mix(in srgb, var(--jammm-lime) 55%, rgba(255,255,255,.2));
+  background: rgba(173,195,34,.28);
+  border-color: rgba(173,195,34,.55);
   box-shadow: inset 0 1px 0 rgba(255,255,255,.04);
 }
 
@@ -274,7 +274,7 @@
 }
 
 .customInput:focus-within {
-  border-color: color-mix(in srgb, var(--jammm-orange) 55%, rgba(255,255,255,.18));
+  border-color: rgba(233,119,49,.58);
   box-shadow: 0 0 0 .2rem rgba(233,119,49,.10);
 }
 

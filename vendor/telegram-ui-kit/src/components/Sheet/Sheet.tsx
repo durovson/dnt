@@ -123,20 +123,22 @@ export function Sheet({
     return !target.closest("button, a, input, textarea, select, label");
   };
 
-  const handlePointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
+  const beginDrag = (event: ReactPointerEvent<HTMLDivElement>) => {
     if (event.pointerType === "mouse" && event.button !== 0) return;
     if (!opened || !canStartDrag(event.target)) return;
 
     const sheet = sheetRef.current;
-    if (!sheet) return;
-
-    // Downward pull-to-close starts only when the sheet itself is already at the top.
-    if (sheet.scrollTop > 0) return;
+    if (!sheet || sheet.scrollTop > 0) return;
 
     dragStartY.current = event.clientY;
     dragPointerId.current = event.pointerId;
     setDragging(true);
-    event.currentTarget.setPointerCapture(event.pointerId);
+    event.currentTarget.setPointerCapture?.(event.pointerId);
+    event.preventDefault();
+  };
+
+  const handlePointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
+    beginDrag(event);
   };
 
   const handlePointerMove = (event: ReactPointerEvent<HTMLDivElement>) => {
@@ -144,13 +146,12 @@ export function Sheet({
     if (dragPointerId.current !== null && event.pointerId !== dragPointerId.current) return;
 
     const delta = event.clientY - dragStartY.current;
-    if (delta > 0) event.preventDefault();
     if (delta <= 0) {
       setDragOffset(0);
       return;
     }
 
-    // Rubber-band the sheet slightly so accidental drags do not feel stuck.
+    event.preventDefault();
     setDragOffset(Math.min(delta, window.innerHeight * 0.86));
   };
 
@@ -162,7 +163,7 @@ export function Sheet({
     dragPointerId.current = null;
     setDragging(false);
 
-    if (event && event.currentTarget.hasPointerCapture(event.pointerId)) {
+    if (event && event.currentTarget.hasPointerCapture?.(event.pointerId)) {
       event.currentTarget.releasePointerCapture(event.pointerId);
     }
 
@@ -180,7 +181,7 @@ export function Sheet({
     dragStartY.current = null;
     dragPointerId.current = null;
     setDragging(false);
-    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+    if (event.currentTarget.hasPointerCapture?.(event.pointerId)) {
       event.currentTarget.releasePointerCapture(event.pointerId);
     }
     setDragOffset(0);
