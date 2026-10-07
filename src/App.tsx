@@ -52,19 +52,18 @@ function toSmallestUnit(value: string, decimals: number): string | null {
   const normalized = value.trim().replace(",", ".");
   if (!/^\d+(\.\d+)?$/.test(normalized)) return null;
 
-  const [wholeRaw, fraction = ""] = normalized.split(".");
+  const [whole, fraction = ""] = normalized.split(".");
   if (fraction.length > decimals) return null;
 
-  const whole = wholeRaw.replace(/^0+(?=\d)/, "");
   const padded = fraction.padEnd(decimals, "0");
-  const units = `${whole}${padded}`.replace(/^0+(?=\d)/, "");
-  return /^0+$/.test(units) ? null : units;
+  const combined = `${whole}${padded}`.replace(/^0+(?=\d)/, "");
+  return combined || "0";
 }
 
 function buildPaymentLinks(currency: Currency, amount: string) {
   const decimals = currency === "GRAM" ? 9 : 6;
   const units = toSmallestUnit(amount, decimals);
-  if (units === null) return null;
+  if (units === null || /^0+$/.test(units)) return null;
 
   const text = encodeURIComponent("Support • JAMMM");
   const query =
@@ -99,7 +98,7 @@ function CheckMark() {
 
 function AboutIcon() {
   return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
       <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.7" />
       <path d="M12 10.5V16" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
       <circle cx="12" cy="7.5" r="1" fill="currentColor" />
@@ -108,14 +107,7 @@ function AboutIcon() {
 }
 
 function TipSheet() {
-  const [currency, setCurrency] = useState<Currency>(() => {
-    try {
-      const saved = window.localStorage.getItem("jammm-support-currency");
-      return saved === "USDT" ? "USDT" : "GRAM";
-    } catch {
-      return "GRAM";
-    }
-  });
+  const [currency, setCurrency] = useState<Currency>("GRAM");
   const [amount, setAmount] = useState<Amount>("5");
   const [customAmount, setCustomAmount] = useState("");
 
@@ -135,7 +127,11 @@ function TipSheet() {
 
   return (
     <div className={styles.sheetContent}>
-      <div className={styles.sheetHeader}>
+      <div className={styles.grabberZone} data-sheet-drag-handle aria-hidden="true">
+        <div className={styles.grabber} />
+      </div>
+
+      <div className={styles.sheetHeader} data-sheet-drag-header>
         <Text as="h2" type="title2" weight="bold">
           Support
         </Text>
@@ -159,12 +155,7 @@ function TipSheet() {
               type="button"
               key={item.id}
               className={`${styles.currencyRow} ${currency === item.id ? styles.selectedRow : ""}`}
-              onClick={() => {
-                setCurrency(item.id);
-                try {
-                  window.localStorage.setItem("jammm-support-currency", item.id);
-                } catch {}
-              }}
+              onClick={() => setCurrency(item.id)}
               aria-pressed={currency === item.id}
             >
               <span className={styles.currencyIcon}>

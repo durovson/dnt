@@ -118,28 +118,31 @@ export function Sheet({
     };
   }, [activeSheet, opened, transitionDuration]);
 
-  const beginDrag = (event: ReactPointerEvent<HTMLDivElement>) => {
-    if (!opened) return;
+  const canStartDrag = (target: EventTarget | null) => {
+    if (!(target instanceof Element)) return false;
+    if (!target.closest("[data-sheet-drag-handle], [data-sheet-drag-header]")) return false;
+    return !target.closest("button, a, input, textarea, select, label");
+  };
+
+  const handlePointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
     if (event.pointerType === "mouse" && event.button !== 0) return;
+    if (!opened || !canStartDrag(event.target)) return;
 
     const sheet = sheetRef.current;
     if (!sheet || sheet.scrollTop > 0) return;
 
+    document.getSelection?.()?.removeAllRanges();
+    document.documentElement.style.userSelect = "none";
+    document.body.style.userSelect = "none";
     dragStartY.current = event.clientY;
     dragPointerId.current = event.pointerId;
     setDragging(true);
-    event.currentTarget.setPointerCapture?.(event.pointerId);
+    event.currentTarget.setPointerCapture(event.pointerId);
     event.preventDefault();
-    window.getSelection?.()?.removeAllRanges();
-  };
-
-  const handlePointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
-    beginDrag(event);
   };
 
   const handlePointerMove = (event: ReactPointerEvent<HTMLDivElement>) => {
     if (!dragging || dragStartY.current === null) return;
-    if (dragPointerId.current !== null && event.pointerId !== dragPointerId.current) return;
 
     const delta = event.clientY - dragStartY.current;
     if (delta <= 0) {
@@ -147,8 +150,7 @@ export function Sheet({
       return;
     }
 
-    event.preventDefault();
-    window.getSelection?.()?.removeAllRanges();
+    // Rubber-band the sheet slightly so accidental drags do not feel stuck.
     setDragOffset(Math.min(delta, window.innerHeight * 0.86));
   };
 
@@ -159,12 +161,12 @@ export function Sheet({
     dragStartY.current = null;
     dragPointerId.current = null;
     setDragging(false);
+    document.documentElement.style.userSelect = "";
+    document.body.style.userSelect = "";
 
-    if (event && event.currentTarget.hasPointerCapture?.(event.pointerId)) {
+    if (event && event.currentTarget.hasPointerCapture(event.pointerId)) {
       event.currentTarget.releasePointerCapture(event.pointerId);
     }
-
-    window.getSelection?.()?.removeAllRanges();
 
     if (shouldClose) {
       setDragOffset(0);
@@ -180,10 +182,11 @@ export function Sheet({
     dragStartY.current = null;
     dragPointerId.current = null;
     setDragging(false);
-    if (event.currentTarget.hasPointerCapture?.(event.pointerId)) {
+    document.documentElement.style.userSelect = "";
+    document.body.style.userSelect = "";
+    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
       event.currentTarget.releasePointerCapture(event.pointerId);
     }
-    window.getSelection?.()?.removeAllRanges();
     setDragOffset(0);
   };
 
@@ -202,6 +205,7 @@ export function Sheet({
         className={cn(styles.sheet, panelOpen && styles.sheetActive, dragging && styles.sheetDragging)}
         role="dialog"
         aria-modal="true"
+        onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
         onPointerUp={finishDrag}
         onPointerCancel={handlePointerCancel}
@@ -215,14 +219,6 @@ export function Sheet({
         >
           <Icon name="cross" width="16px" height="16px" color="primary" />
         </button>
-
-        <div
-          className={styles.dragHandle}
-          onPointerDown={handlePointerDown}
-          aria-hidden="true"
-        >
-          <div className={styles.grabber} />
-        </div>
 
         <div className={styles.content}>
           {ActiveComponent ? <ActiveComponent /> : null}
