@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useRef, useState } from "react";
 import { Button } from "../vendor/telegram-ui-kit/src/components/Button/Button";
 import { Image } from "../vendor/telegram-ui-kit/src/components/Image/Image";
 import { Input } from "../vendor/telegram-ui-kit/src/components/Input/Input";
@@ -47,6 +47,7 @@ const currencies: Array<{
 ];
 
 const amounts: Amount[] = ["5", "10", "25", "custom"];
+const MAX_CUSTOM_AMOUNT = 10_000_000;
 
 function toSmallestUnit(value: string, decimals: number): string | null {
   const normalized = value.trim().replace(",", ".");
@@ -110,6 +111,7 @@ function TipSheet() {
   const [currency, setCurrency] = useState<Currency>("GRAM");
   const [amount, setAmount] = useState<Amount>("5");
   const [customAmount, setCustomAmount] = useState("");
+  const customInputRef = useRef<HTMLInputElement | null>(null);
 
   const displayAmount = amount === "custom" ? customAmount : amount;
   const links = buildPaymentLinks(currency, displayAmount);
@@ -209,11 +211,35 @@ function TipSheet() {
         {amount === "custom" && (
           <label className={styles.customInput}>
             <Input
+              ref={customInputRef}
               type="text"
               inputMode="decimal"
+              enterKeyHint="done"
               placeholder="Enter amount"
               value={customAmount}
-              onChange={setCustomAmount}
+              onKeyDown={(event) => {
+                if (event.key === "Enter") {
+                  event.preventDefault();
+                  event.currentTarget.blur();
+                }
+              }}
+              onChange={(value) => {
+                const normalized = value.replace(",", ".").trim();
+                if (normalized === "") {
+                  setCustomAmount("");
+                  return;
+                }
+
+                if (!/^\d*(\.\d*)?$/.test(normalized)) return;
+
+                const numeric = Number(normalized);
+                if (Number.isFinite(numeric) && numeric > MAX_CUSTOM_AMOUNT) {
+                  setCustomAmount(String(MAX_CUSTOM_AMOUNT));
+                  return;
+                }
+
+                setCustomAmount(normalized);
+              }}
               aria-label="Custom tip amount"
               autoFocus
               className={styles.amountInput}

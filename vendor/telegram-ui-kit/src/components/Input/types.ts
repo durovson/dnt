@@ -15,6 +15,7 @@ export interface InputProps {
   size?: number;
   spellCheck?: boolean;
   tabIndex?: number;
+  enterKeyHint?: React.HTMLAttributes<HTMLInputElement>["enterKeyHint"];
   numeric?: boolean;
   // События
   onChange?: (

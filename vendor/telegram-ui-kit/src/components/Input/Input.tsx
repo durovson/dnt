@@ -22,6 +22,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
     size,
     spellCheck,
     tabIndex,
+    enterKeyHint,
     numeric = false,
     onChange,
     onFocus,
@@ -116,6 +117,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
       size={size}
       spellCheck={spellCheck}
       tabIndex={tabIndex}
+      enterKeyHint={enterKeyHint}
       inputMode={numeric ? "numeric" : undefined}
       onChange={handleChange}
       onFocus={handleFocus}
