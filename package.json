@@ -1,6 +1,26 @@
 {
-  "name": "jammm-profile",
+  "name": "jammm-tip-profile",
   "private": true,
   "version": "1.0.0",
-  "scripts": {"dev":"python -m http.server 4173 -d public","build":"node -e \"console.log('Static site: public/')\""}
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@vitejs/plugin-react": "^4.6.0",
+    "classnames": "^2.5.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-remove-scroll": "^2.6.1",
+    "sass": "^1.89.2",
+    "typescript": "~5.8.3",
+    "vite": "^7.0.4"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1"
+  }
 }

@@ -48,6 +48,8 @@
 
 .sheetDragging {
   transition: none;
+  touch-action: none;
+  user-select: none;
 }
 
 .cross {
@@ -74,7 +76,7 @@
 .cross:hover { background: color-mix(in srgb, var(--color-background-secondary) 78%, white); }
 .cross:active { transform: scale(.96); }
 .cross:focus,
-.cross:focus-visible { outline: none; box-shadow: none; }
+.cross:focus-visible { outline: 0 !important; box-shadow: none !important; -webkit-focus-ring-color: transparent; }
 
 .cross svg {
   pointer-events: none;

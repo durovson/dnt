@@ -141,8 +141,10 @@ export function Sheet({
 
   const handlePointerMove = (event: ReactPointerEvent<HTMLDivElement>) => {
     if (!dragging || dragStartY.current === null) return;
+    if (dragPointerId.current !== null && event.pointerId !== dragPointerId.current) return;
 
     const delta = event.clientY - dragStartY.current;
+    if (delta > 0) event.preventDefault();
     if (delta <= 0) {
       setDragOffset(0);
       return;

@@ -21,7 +21,7 @@ const USDT_MASTER =
   "EQCxE6mUtQJKFnGfaROTKOt1lZbDiiX1kCixRv7Nw2Id_sDs";
 
 const GRAM_ICON = asset("gram.svg");
-const USDT_ICON = "https://tether.to/images/logoCircle.svg";
+const USDT_ICON = asset("usdt.svg");
 
 const currencies: Array<{
   id: Currency;
@@ -78,7 +78,7 @@ function buildPaymentLinks(currency: Currency, amount: string) {
 
 function TelegramPlaneIcon() {
   return (
-    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
       <path
         d="M20.5 4.2 17.1 20c-.25 1.12-.9 1.4-1.82.87l-4.95-3.65-2.39 2.3c-.26.26-.48.48-.98.48l.36-5.04 9.17-8.28c.4-.36-.09-.56-.62-.2L4.54 13.62.1 12.23c-.97-.31-.99-.98.2-1.44L17.62 4c.8-.3 1.5.18 1.2.2l1.68.02Z"
         fill="currentColor"

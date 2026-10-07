@@ -1,6 +1,8 @@
 @use "../vendor/telegram-ui-kit/src/styles/variables" as *;
 
 :global(:root) {
+  --font-base: Arial, Helvetica, sans-serif;
+  --font-display: Arial, Helvetica, sans-serif;
   --jammm-lime: #adc322;
   --jammm-orange: #e97731;
   --jammm-mint: #d6e5d2;
@@ -28,15 +30,15 @@
   height: 100%;
   object-fit: cover;
   object-position: center;
-  filter: saturate(.78) contrast(1.1) brightness(.5) grayscale(0);
+  filter: saturate(.48) contrast(1.04) brightness(.52) grayscale(.06);
   transform: scale(1.02);
 }
 
 .backdropVignette {
   z-index: -2;
   background:
-    linear-gradient(135deg, rgba(9, 13, 7, .58) 0%, rgba(15, 13, 8, .62) 48%, rgba(24, 11, 7, .72) 100%),
-    radial-gradient(circle at 50% 18%, rgba(40, 48, 16, .08) 0 16%, rgba(0,0,0,.18) 50%, rgba(0,0,0,.72) 100%);
+    linear-gradient(135deg, rgba(7, 7, 7, .70) 0%, rgba(12, 12, 12, .64) 48%, rgba(16, 15, 14, .74) 100%),
+    radial-gradient(circle at 50% 18%, transparent 0 14%, rgba(0,0,0,.22) 48%, rgba(0,0,0,.72) 100%);
 }
 
 .profile {
@@ -144,7 +146,7 @@
   box-shadow: 0 .8rem 2rem rgba(173, 195, 34, .20);
   font-family: var(--font-display, var(--font-base)) !important;
   font-size: 1rem !important;
-  font-weight: 700 !important;
+  font-weight: 650 !important;
 }
 
 .tipTrigger:focus,
@@ -281,7 +283,7 @@
   min-height: 3rem;
   color: #fff !important;
   font-size: 1.05rem !important;
-  font-weight: 700 !important;
+  font-weight: 650 !important;
 }
 
 .amountInput:focus,
@@ -296,7 +298,7 @@
   box-shadow: 0 .6rem 1.5rem rgba(173,195,34,.24);
   font-family: var(--font-display, var(--font-base)) !important;
   font-size: 1rem !important;
-  font-weight: 700 !important;
+  font-weight: 650 !important;
 }
 .sendButton:focus,
 .sendButton:focus-visible,
@@ -341,3 +343,5 @@
 .currencyRow, .amountPill { color: var(--jammm-mint); }
 .currencyTitle { color: var(--jammm-mint); }
 .profileAction { color: var(--jammm-mint); text-decoration: none; }
+
+.actionMark > svg { width: 18px; height: 18px; display: block; overflow: visible; flex: 0 0 auto; }
