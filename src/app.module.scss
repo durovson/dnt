@@ -28,15 +28,15 @@
   height: 100%;
   object-fit: cover;
   object-position: center;
-  filter: saturate(.42) contrast(1.02) brightness(.58) grayscale(.08);
+  filter: saturate(.78) contrast(1.1) brightness(.5) grayscale(0);
   transform: scale(1.02);
 }
 
 .backdropVignette {
   z-index: -2;
   background:
-    linear-gradient(135deg, rgba(9, 9, 9, .62) 0%, rgba(15, 15, 15, .55) 48%, rgba(22, 20, 18, .68) 100%),
-    radial-gradient(circle at 50% 18%, transparent 0 16%, rgba(0,0,0,.18) 50%, rgba(0,0,0,.68) 100%);
+    linear-gradient(135deg, rgba(9, 13, 7, .58) 0%, rgba(15, 13, 8, .62) 48%, rgba(24, 11, 7, .72) 100%),
+    radial-gradient(circle at 50% 18%, rgba(40, 48, 16, .08) 0 16%, rgba(0,0,0,.18) 50%, rgba(0,0,0,.72) 100%);
 }
 
 .profile {
@@ -144,7 +144,7 @@
   box-shadow: 0 .8rem 2rem rgba(173, 195, 34, .20);
   font-family: var(--font-display, var(--font-base)) !important;
   font-size: 1rem !important;
-  font-weight: 650 !important;
+  font-weight: 700 !important;
 }
 
 .tipTrigger:focus,
@@ -281,7 +281,7 @@
   min-height: 3rem;
   color: #fff !important;
   font-size: 1.05rem !important;
-  font-weight: 650 !important;
+  font-weight: 700 !important;
 }
 
 .amountInput:focus,
@@ -296,7 +296,7 @@
   box-shadow: 0 .6rem 1.5rem rgba(173,195,34,.24);
   font-family: var(--font-display, var(--font-base)) !important;
   font-size: 1rem !important;
-  font-weight: 650 !important;
+  font-weight: 700 !important;
 }
 .sendButton:focus,
 .sendButton:focus-visible,
