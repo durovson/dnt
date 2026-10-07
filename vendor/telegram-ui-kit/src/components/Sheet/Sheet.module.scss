@@ -38,8 +38,6 @@
   overflow-y: auto;
   overscroll-behavior: contain;
   touch-action: pan-y;
-  user-select: none;
-  -webkit-user-select: none;
   -webkit-overflow-scrolling: touch;
   box-shadow: 0 -1rem 3rem rgba(0,0,0,.28);
 }
@@ -51,8 +49,8 @@
 .sheetDragging {
   transition: none;
   touch-action: none !important;
-  user-select: none;
-  -webkit-user-select: none;
+  user-select: none !important;
+  -webkit-user-select: none !important;
 }
 
 .cross {
@@ -103,13 +101,30 @@
   }
 }
 
-.grabberZone {
+.dragHandle {
+  min-height: 2.25rem;
+  display: grid;
+  place-items: center;
   cursor: grab;
-  touch-action: pan-y;
-  -webkit-user-select: none;
+  touch-action: none;
   user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.sheetDragging .grabberZone {
+.grabber {
+  width: 2.7rem;
+  height: .28rem;
+  border-radius: 999px;
+  background: rgba(255,255,255,.2);
+}
+
+.sheetDragging .dragHandle {
   cursor: grabbing;
+}
+
+.sheetDragging,
+.sheetDragging * {
+  user-select: none !important;
+  -webkit-user-select: none !important;
 }

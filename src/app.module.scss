@@ -163,20 +163,6 @@
     linear-gradient(180deg, rgba(29,29,32,.98), rgba(20,20,23,.99));
 }
 
-.grabberZone {
-  min-height: 2rem;
-  display: grid;
-  place-items: center;
-  touch-action: none;
-}
-
-.grabber {
-  width: 2.7rem;
-  height: .28rem;
-  border-radius: 999px;
-  background: rgba(255,255,255,.2);
-}
-
 .sheetHeader {
   min-height: 3rem;
   display: flex;

@@ -49,8 +49,18 @@ input:focus-visible {
   box-shadow: none;
   -webkit-focus-ring-color: transparent;
 }
-::selection { background: #adc322 !important; color: #0a0a0c !important; }
-::-moz-selection { background: #adc322 !important; color: #0a0a0c !important; }
+*::selection {
+  background: #adc322 !important;
+  background-color: #adc322 !important;
+  color: #0a0a0c !important;
+  -webkit-text-fill-color: #0a0a0c !important;
+}
+
+*::-moz-selection {
+  background: #adc322 !important;
+  background-color: #adc322 !important;
+  color: #0a0a0c !important;
+}
 
 :where(a, button, input, textarea, select):focus { outline: 0 !important; }
 :where(a, button, input, textarea, select):focus-visible { outline: 0 !important; }

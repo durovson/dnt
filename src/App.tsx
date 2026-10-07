@@ -48,27 +48,29 @@ const currencies: Array<{
 
 const amounts: Amount[] = ["5", "10", "25", "custom"];
 
-function toSmallestUnit(value: string, decimals: number): bigint | null {
+function toSmallestUnit(value: string, decimals: number): string | null {
   const normalized = value.trim().replace(",", ".");
   if (!/^\d+(\.\d+)?$/.test(normalized)) return null;
 
-  const [whole, fraction = ""] = normalized.split(".");
+  const [wholeRaw, fraction = ""] = normalized.split(".");
   if (fraction.length > decimals) return null;
 
+  const whole = wholeRaw.replace(/^0+(?=\d)/, "");
   const padded = fraction.padEnd(decimals, "0");
-  return BigInt(whole) * 10n ** BigInt(decimals) + BigInt(padded || "0");
+  const units = `${whole}${padded}`.replace(/^0+(?=\d)/, "");
+  return /^0+$/.test(units) ? null : units;
 }
 
 function buildPaymentLinks(currency: Currency, amount: string) {
   const decimals = currency === "GRAM" ? 9 : 6;
   const units = toSmallestUnit(amount, decimals);
-  if (units === null || units <= 0n) return null;
+  if (units === null) return null;
 
   const text = encodeURIComponent("Support • JAMMM");
   const query =
     currency === "GRAM"
-      ? `amount=${units.toString()}&text=${text}`
-      : `jetton=${USDT_MASTER}&amount=${units.toString()}&text=${text}`;
+      ? `amount=${units}&text=${text}`
+      : `jetton=${USDT_MASTER}&amount=${units}&text=${text}`;
 
   return {
     ton: `ton://transfer/${RECIPIENT_ADDRESS}?${query}`,
@@ -133,10 +135,6 @@ function TipSheet() {
 
   return (
     <div className={styles.sheetContent}>
-      <div className={styles.grabberZone} aria-hidden="true">
-        <div className={styles.grabber} />
-      </div>
-
       <div className={styles.sheetHeader}>
         <Text as="h2" type="title2" weight="bold">
           Support

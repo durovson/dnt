@@ -118,14 +118,9 @@ export function Sheet({
     };
   }, [activeSheet, opened, transitionDuration]);
 
-  const canStartDrag = (target: EventTarget | null) => {
-    if (!(target instanceof Element)) return true;
-    return !target.closest("button, a, input, textarea, select, label");
-  };
-
   const beginDrag = (event: ReactPointerEvent<HTMLDivElement>) => {
+    if (!opened) return;
     if (event.pointerType === "mouse" && event.button !== 0) return;
-    if (!opened || !canStartDrag(event.target)) return;
 
     const sheet = sheetRef.current;
     if (!sheet || sheet.scrollTop > 0) return;
@@ -135,6 +130,7 @@ export function Sheet({
     setDragging(true);
     event.currentTarget.setPointerCapture?.(event.pointerId);
     event.preventDefault();
+    window.getSelection?.()?.removeAllRanges();
   };
 
   const handlePointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
@@ -152,6 +148,7 @@ export function Sheet({
     }
 
     event.preventDefault();
+    window.getSelection?.()?.removeAllRanges();
     setDragOffset(Math.min(delta, window.innerHeight * 0.86));
   };
 
@@ -166,6 +163,8 @@ export function Sheet({
     if (event && event.currentTarget.hasPointerCapture?.(event.pointerId)) {
       event.currentTarget.releasePointerCapture(event.pointerId);
     }
+
+    window.getSelection?.()?.removeAllRanges();
 
     if (shouldClose) {
       setDragOffset(0);
@@ -184,6 +183,7 @@ export function Sheet({
     if (event.currentTarget.hasPointerCapture?.(event.pointerId)) {
       event.currentTarget.releasePointerCapture(event.pointerId);
     }
+    window.getSelection?.()?.removeAllRanges();
     setDragOffset(0);
   };
 
@@ -202,7 +202,6 @@ export function Sheet({
         className={cn(styles.sheet, panelOpen && styles.sheetActive, dragging && styles.sheetDragging)}
         role="dialog"
         aria-modal="true"
-        onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
         onPointerUp={finishDrag}
         onPointerCancel={handlePointerCancel}
@@ -216,6 +215,14 @@ export function Sheet({
         >
           <Icon name="cross" width="16px" height="16px" color="primary" />
         </button>
+
+        <div
+          className={styles.dragHandle}
+          onPointerDown={handlePointerDown}
+          aria-hidden="true"
+        >
+          <div className={styles.grabber} />
+        </div>
 
         <div className={styles.content}>
           {ActiveComponent ? <ActiveComponent /> : null}
