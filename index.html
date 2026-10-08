@@ -7685,5 +7685,5 @@ document.querySelectorAll(".fb-currency").forEach(function(x){x.onclick=function
 send.onclick=function(){var n=Number(a==="custom"?v:a);if(!Number.isFinite(n)||n<=0||n>10000000)return;var u=Math.round(n*(c==="GRAM"?1e9:1e6)).toString(),q=c==="GRAM"?"amount="+u+"&text="+encodeURIComponent("Support • JAMMM"):"jetton="+master+"&amount="+u+"&text="+encodeURIComponent("Support • JAMMM");window.location.href=matchMedia("(pointer: coarse)").matches?"ton://transfer/"+rec+"?"+q:"https://app.tonkeeper.com/transfer/"+rec+"?"+q};
 var start=null,g=document.getElementById("fb-grab");g.onpointerdown=function(e){start=e.clientY;g.setPointerCapture(e.pointerId)};g.onpointermove=function(e){if(start===null)return;var d=Math.max(0,e.clientY-start);s.style.transform="translate(-50%,"+d+"px)"};g.onpointerup=function(e){if(start===null)return;var d=Math.max(0,e.clientY-start);s.style.transform="";start=null;if(d>=96)open(false)};g.onpointercancel=function(){s.style.transform="";start=null};render()})();
 </script>
-<script type="module" crossorigin src="/assets/index-D9yGHdvf.js"></script><link rel="stylesheet" crossorigin href="/assets/index-DoAu7XsT.css">
+<script type="module" src="/src/main.tsx"></script>
 </body></html>
