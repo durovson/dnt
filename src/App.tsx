@@ -327,7 +327,7 @@ export function App() {
             <span className={styles.actionMark}>
               <TelegramPlaneIcon />
             </span>
-            <span>Channel</span>
+            <span>TG</span>
           </a>
           <a
             className={styles.profileAction}
