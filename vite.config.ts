@@ -6,7 +6,7 @@ import { fileURLToPath } from "node:url";
 const rootDir = path.dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
-  base: "/",
+  base: "/dnt/",
   plugins: [react()],
   css: { modules: { localsConvention: "camelCase" } },
   resolve: {
