@@ -96,6 +96,7 @@
 }
 
 .profileAction {
+  text-transform: uppercase;
   min-height: 3.35rem;
   padding: .65rem .9rem;
   display: flex;
@@ -132,7 +133,7 @@
   border-radius: 50%;
   display: grid;
   place-items: center;
-  background: rgba(214,229,210,.10);
+  background: linear-gradient(135deg, var(--jammm-lime), var(--jammm-orange));
   color: var(--jammm-mint);
   box-shadow: inset 0 1px 0 rgba(255,255,255,.05);
 }
@@ -149,6 +150,7 @@
   font-family: var(--font-display, var(--font-base)) !important;
   font-size: 1rem !important;
   font-weight: 650 !important;
+  text-transform: uppercase;
 }
 
 .tipTrigger:focus,
@@ -198,6 +200,7 @@
 }
 
 .currencyRow {
+  text-transform: uppercase;
   position: relative;
   width: 100%;
   min-height: 4.65rem;
@@ -239,6 +242,7 @@
 }
 
 .amountPill {
+  text-transform: uppercase;
   min-height: 3.15rem;
   padding-inline: .35rem;
   border: 1px solid rgba(255,255,255,.11);
@@ -301,6 +305,7 @@
   font-family: var(--font-display, var(--font-base)) !important;
   font-size: 1rem !important;
   font-weight: 650 !important;
+  text-transform: uppercase;
 }
 .sendButton:focus,
 .sendButton:focus-visible,
